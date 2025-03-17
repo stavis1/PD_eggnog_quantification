@@ -1,8 +1,8 @@
-#[download_eggnog_data_params]
+[download_eggnog_data_params]
 #Parameters for download_eggnog_data.py from eggnog-mapper.
 #If you wish to use one of the search tools other than diamond you will need to specify the databases here
 
-#[emapper_params]
+[emapper_params]
 #Parameters for emapper.py from eggnog-mapper.
 #The pipeline will supply -i, -o, --output_dir, and --data_dir.
 #If you wish to add other parameters simply add a line with {flag} = '{value}'. 
@@ -19,7 +19,7 @@ tax_scope = '2,2157,2759,1' #The order of these taxids controls preference. This
 target_orthologs = 'all' #One {experimental,non-electronic,all}.
 go_evidence = 'non-electronic' #One of {experimental,non-electronic,all}.
 
-#[rollup_params]
+[rollup_params]
 #Parameters for quantify_annotations.py
 exclude_columns = ['seed_ortholog', 'evalue', 'score', 'eggNOG_OGs']
 
