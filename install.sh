@@ -4,7 +4,7 @@
 module load PE-gnu
 module load singularity
 cache_dir=$(find ./ -name cache -type d | xargs realpath)
-singularity build --force $cache_dir/stavisvols-eggnog_for_pipeline-latest.img docker://stavisvols/eggnog_for_pipeline:latest
+singularity build --force $cache_dir/stavisvols-eggnog_for_pd-latest.img docker://stavisvols/eggnog_for_pd:latest
 
 #if the user has access to BSD resources use those instead of birthright
 run_script=$(find ./ -name run.sbatch)
@@ -18,10 +18,10 @@ fi
 
 #add the cache dir and options file to the slurm scripts
 toml=$(find ./ -name options.toml | xargs realpath)
-sed -i "s/CACHE/${cache_dir}/g" $run_script
-sed -i "s/CACHE/${cache_dir}/g" $db_script
-sed -i "s/TOML/${toml}/g" $run_script
-sed -i "s/TOML/${toml}/g" $db_script
+sed -i "s@CACHE@${cache_dir}@g" $run_script
+sed -i "s@CACHE@${cache_dir}@g" $db_script
+sed -i "s@TOML@${toml}@g" $run_script
+sed -i "s@TOML@${toml}@g" $db_script
 
 #download eggnog database
 sbatch $db_script
