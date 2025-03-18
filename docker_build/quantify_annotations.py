@@ -143,6 +143,8 @@ for annotation_file in annotation_files:
         for ann_type, term_set in zip(annotation_types, term_sets):
             if ann_type == 'COG_category':
                 terms = term_set.split()
+            elif ann_type == 'Description':
+                terms = [term_set]
             else:
                 terms = term_set.split(',')
             for term in terms:
