@@ -18,7 +18,7 @@ fi
 
 #download annotation term descriptions
 if [ ! -f $cache_dir/annotation_names.tsv ]; then
-    wget https://figshare.com/ndownloader/files/53085347 -O $cache_dir/annotation_names
+    wget https://figshare.com/ndownloader/files/53085347 -O $cache_dir/annotation_names.tsv
 fi
 
 #if the user has access to BSD resources use those instead of birthright
