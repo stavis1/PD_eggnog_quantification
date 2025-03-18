@@ -21,6 +21,6 @@ go_evidence = 'non-electronic' #One of {experimental,non-electronic,all}.
 
 [rollup_params]
 #Parameters for quantify_annotations.py
-exclude_columns = ['seed_ortholog', 'evalue', 'score', 'eggNOG_OGs']
+exclude_columns = ['seed_ortholog', 'evalue', 'score', 'eggNOG_OGs', 'max_annot_lvl']
 
 
