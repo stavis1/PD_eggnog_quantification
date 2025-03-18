@@ -8,6 +8,14 @@ if [ ! -f $cache_dir/stavisvols-eggnog_for_pd-latest.img ]; then
     singularity build --force $cache_dir/stavisvols-eggnog_for_pd-latest.img docker://stavisvols/eggnog_for_pd:latest
 fi
 
+#parse the GO ontology definiton file
+if [ ! -f $cache_dir/gomap.tsv ]; then
+    wget https://current.geneontology.org/ontology/go.obo -P $cache_dir
+    module load python
+    goparser=$(find ./ -name get_GO_mapping.py)
+    python $goparser --input $cache_dir/go.obo --output $cache_dir/gomap.tsv
+fi
+
 #if the user has access to BSD resources use those instead of birthright
 run_script=$(find ./ -name run.sbatch)
 db_script=$(find ./ -name download_DB.sbatch)

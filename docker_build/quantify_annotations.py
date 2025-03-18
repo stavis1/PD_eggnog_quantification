@@ -10,7 +10,9 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--options', action = 'store', required = True,
                     help = 'The TOML formatted options file')
-args = parser.parse_args()
+parser.add_argument('-g', '--gofile', action = 'store', required = True,
+                    help = 'The .tsv mapping GO terms to the list of implied terms.')
+args = parser.parse_args('-o options.toml -g gomap.tsv'.split())
 
 import os
 import tomli
@@ -110,6 +112,15 @@ quantcols = [c for c in pepdata.columns if c.startswith('Abundance: ')]
 peptides = [Peptide(s, p, i) for s, p, i in zip(pepdata.index, pepdata['proteins'], zip(*[pepdata[c] for c in quantcols]))]
 sample_sums = np.nansum(pepdata[quantcols].to_numpy(), axis = 0)
 
+#get a mapping of GO terms to the list of terms implied by the ontology
+goterms = pd.read_csv(args.gofile, sep = '\t')
+term_map = keydefaultdict(lambda x: [x],
+                          {t:a.split(';') for t,a in zip(goterms['term'], goterms['ancestors'])})
+def expand_terms(termset):
+    terms = termset.split(',')
+    all_terms = set(t for term in terms for t in term_map[term])
+    return ','.join(all_terms)
+
 #read protein annotation data
 annotation_files = [f for f in os.listdir() if f.endswith('.emapper.annotations')]
 annotations = defaultdict(lambda:set())
@@ -118,6 +129,7 @@ for annotation_file in annotation_files:
     data = data[[c for c in data.columns if not c in options['exclude_columns']]]
     data = data.replace('-', 'unannotated')
     data = data.replace(np.nan, 'unannotated')
+    data['GOs'] = [expand_terms(g) for g in data['GOs']]
     annotation_types = list(data.columns)[1:]
     for protein, term_sets in zip(data['#query'], zip(*[data[c] for c in annotation_types])):
         for ann_type, term_set in zip(annotation_types, term_sets):
