@@ -13,6 +13,9 @@
 cache_dir=CACHE
 options_file=TOML
 
+module load PE-gnu
+module load singularity
+
 fastas=$(ls *{.faa,.fasta})
 for fasta in $fastas;
 do
