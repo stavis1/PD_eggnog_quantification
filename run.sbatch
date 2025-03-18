@@ -19,8 +19,8 @@ module load singularity
 fastas=$(ls *{.faa,.fasta})
 for fasta in $fastas;
 do
-    singularity exec --no-home --bind $cache_dir:/cache/  $cache_dir/stavisvols-eggnog_for_pd-latest.img eggnog_wrapper.py --task search --options $options_file --run_args "-i ${fasta} -o ${fasta} --output_dir ./ --data_dir ${cache_dir}/eggnog_db"
+    singularity exec --bind $cache_dir:/cache/  $cache_dir/stavisvols-eggnog_for_pd-latest.img eggnog_wrapper.py --task search --options $options_file --run_args "-i ${fasta} -o ${fasta} --output_dir ./ --data_dir ${cache_dir}/eggnog_db"
 done
 
-singularity exec --no-home $cache_dir/stavisvols-eggnog_for_pd-latest.img quantify_annotations.py --options $options_file
+singularity exec $cache_dir/stavisvols-eggnog_for_pd-latest.img quantify_annotations.py --options $options_file
 
