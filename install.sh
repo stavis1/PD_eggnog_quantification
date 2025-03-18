@@ -16,6 +16,11 @@ if [ ! -f $cache_dir/gomap.tsv ]; then
     python $goparser --input $cache_dir/go.obo --output $cache_dir/gomap.tsv
 fi
 
+#download annotation term descriptions
+if [ ! -f $cache_dir/annotation_names.tsv ]; then
+    wget https://figshare.com/ndownloader/files/53085347 -O $cache_dir/annotation_names
+fi
+
 #if the user has access to BSD resources use those instead of birthright
 run_script=$(find ./ -name run.sbatch)
 db_script=$(find ./ -name download_DB.sbatch)

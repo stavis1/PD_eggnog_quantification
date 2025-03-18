@@ -12,7 +12,9 @@ parser.add_argument('-o', '--options', action = 'store', required = True,
                     help = 'The TOML formatted options file')
 parser.add_argument('-g', '--gofile', action = 'store', required = True,
                     help = 'The .tsv mapping GO terms to the list of implied terms.')
-args = parser.parse_args('-o options.toml -g gomap.tsv'.split())
+parser.add_argument('-n', '--namefile', action = 'store', required = True,
+                    help = 'The .tsv mapping annotation terms to human readable names.')
+args = parser.parse_args()
 
 import os
 import tomli
@@ -87,6 +89,7 @@ class Term:
         self.all_intensity = self.all_intensity/sample_sums
         report_data = {'annotation_type':self.annotation_type,
                        'term':self.term,
+                       'name':annotation_names[self.term],
                        'contributing_proteins':';'.join(self.contributing_proteins)}
         report_data.update({f'coherent_intensity_{c[11:]}':i for c, i in zip(quantcols, self.coherent_intensity)})
         report_data.update({f'N_coherent_peptides_{c[11:]}':i for c, i in zip(quantcols, self.N_coherent)})
@@ -120,6 +123,11 @@ def expand_terms(termset):
     terms = termset.split(',')
     all_terms = set(t for term in terms for t in term_map[term])
     return ','.join(all_terms)
+
+#get a mapping of annotation terms to their human readable names
+annotation_names = pd.read_csv(args.namefile, sep = '\t')
+annotation_names = defaultdict(lambda: '',
+                               {t:d for t,d in zip(annotation_names['term'], annotation_names['description'])})
 
 #read protein annotation data
 annotation_files = [f for f in os.listdir() if f.endswith('.emapper.annotations')]
