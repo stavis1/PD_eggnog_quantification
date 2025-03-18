@@ -24,8 +24,10 @@ sed -i "s@TOML@${toml}@g" $run_script
 sed -i "s@TOML@${toml}@g" $db_script
 
 #download eggnog database
-sbatch $db_script
-echo 'Please wait for the eggnog database to be downloaded; this will take several hours.'
-echo 'To check if the job is still running execute "squeue | grep $USER" and look for "DL_DB".'
-
+if [ ! -d $cache_dir/eggnog_db ];
+then
+    sbatch $db_script
+    echo 'Please wait for the eggnog database to be downloaded; this will take several hours.'
+    echo 'To check if the job is still running execute "squeue | grep $USER" and look for "DL_DB".'
+fi
 
