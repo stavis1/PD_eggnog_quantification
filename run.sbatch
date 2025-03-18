@@ -4,7 +4,7 @@
 #SBATCH --qos=birthright-high_mem_cd
 #SBATCH -t 1-00:00:00
 #SBATCH --nodes=1
-#SBATCH -c 4
+#SBATCH -c 20
 #SBATCH --mem=50g
 #SBATCH -J eggnog
 #SBATCH --output=eggnog_out_%j.log
