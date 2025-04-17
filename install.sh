@@ -1,11 +1,9 @@
 #!/bin/bash
 
-#pull the singularity container for eggnog
+#pull the apptainer container for eggnog
 cache_dir=$(find ./ -name cache -type d | xargs realpath)
 if [ ! -f $cache_dir/stavisvols-eggnog_for_pd-latest.img ]; then
-    module load PE-gnu
-    module load singularity
-    singularity build --force $cache_dir/stavisvols-eggnog_for_pd-latest.img docker://stavisvols/eggnog_for_pd:latest
+    apptainer build --force $cache_dir/stavisvols-eggnog_for_pd-latest.img docker://stavisvols/eggnog_for_pd:latest
 fi
 
 #parse the GO ontology definiton file

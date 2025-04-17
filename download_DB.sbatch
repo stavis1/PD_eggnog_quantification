@@ -13,10 +13,8 @@
 cache_dir=CACHE
 options_file=TOML
 
-module load PE-gnu
-module load singularity
 mkdir $cache_dir/eggnog_db
-singularity exec --no-home --bind $cache_dir:/cache/  $cache_dir/stavisvols-eggnog_for_pd-latest.img eggnog_wrapper.py --task download --options $options_file --run_args "-y --data_dir ${cache_dir}/eggnog_db"
+apptainer exec --no-home --bind $cache_dir:/cache/  $cache_dir/stavisvols-eggnog_for_pd-latest.img eggnog_wrapper.py --task download --options $options_file --run_args "-y --data_dir ${cache_dir}/eggnog_db"
 
 
 
