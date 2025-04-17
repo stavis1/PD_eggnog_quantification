@@ -3,7 +3,7 @@ This is a tool for 1: running eggnog annotations on fasta files and 2: using pro
 This tool is intended for use by the Hettich lab at ORNL and so it makes several assumptions about the available compute resources that will not be true for anyone else. 
 
 ## To install:
-1. Log into CADES. The URL is or-login.ornl.gov. Use your 3 letter ID and password to log in. This is an SSH connection so either use MobaXterm or run `ssh <3letterID>@or-slurm-login.ornl.gov` on a bash terminal. 
+1. Log into CADES. The URL is or-login.ornl.gov. Use your 3 letter ID and password to log in. This is an SSH connection so either use MobaXterm or run `ssh <3letterID>@or-login.ornl.gov` on a bash terminal. 
 2. Run `git clone https://github.com/stavis1/PD_eggnog_quantification` to download the code.
 3. Run `cd PD_eggnog_quantification` to navigate to the code directory. 
 4. Run `./install.sh` to set up the scripts for your account and download the eggnog database. 
